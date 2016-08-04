@@ -79,7 +79,7 @@ if __name__ == '__main__':
     port = start_args.port
     
     logger.info('Loading model.')
-    model = apiModel(start_args.model_file)
+    model = apiModel(start_args.model_file, config['model_name'])
 
     logger.info('Starting service.')    
     api.add_resource(ClassifierAPI, '/api/score', resource_class_kwargs={
