@@ -1,0 +1,1 @@
+Generic `docker` REST wrapper

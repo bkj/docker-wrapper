@@ -1,0 +1,10 @@
+{
+    "description" : "Description of analytic",
+    "reqparse" : [
+        {
+            "field" : "url",
+            "location" : "json",
+            "type" : "str"
+        }
+    ]
+}
