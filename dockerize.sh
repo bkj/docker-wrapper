@@ -33,7 +33,7 @@ cp `cat $config | jq -r .class` images/$imname/model_class.py
 cp `cat $config | jq -r .model` images/$imname/model
 cp `cat $config | jq -r .bootstrap` images/$imname/bootstrap.sh
 cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r {} images/$imname/
-cat $config | jq '{"description" : .description, "rest_args" : .rest_args}' > images/$imname/config.json
+cat $config | jq '{"model_name": .model_name, "description": .description, "rest_args": .rest_args}' > images/$imname/config.json
 cp $config images/$imname/.docker-wrapper-config.json
 
 tar -zcf images/$imname.tar.gz images/$imname
