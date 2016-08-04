@@ -30,7 +30,7 @@ mkdir images/$imname
 
 cp resources/* images/$imname/
 cp `cat $config | jq -r .class` images/$imname/model_class.py
-cp `cat $config | jq -r .model` images/$imname/model
+cp -r `cat $config | jq -r .model` images/$imname/model
 cp `cat $config | jq -r .bootstrap` images/$imname/bootstrap.sh
 cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r {} images/$imname/
 cat $config | jq '{"description" : .description, "rest_args" : .rest_args}' > images/$imname/config.json
