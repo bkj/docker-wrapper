@@ -1,5 +1,6 @@
-Generic `docker` REST wrapper
+### `docker` REST wrapper
 
-User needs to implement `bootstrap.sh` to install dependencies.
-User needs to set `config.json` properly
+User needs to set `config.json` properly.
+User probably needs to implement a `bootstrap.sh` script to install dependencies.
+
 

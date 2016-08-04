@@ -12,7 +12,7 @@ from tornado.wsgi import WSGIContainer
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from generic_model import apiModel
+from model_class import apiModel
 
 output_json.func_globals['settings'] = {
     'ensure_ascii' : False,
@@ -37,10 +37,10 @@ def parse_arguments():
 class ClassifierAPI(Resource):
     def __init__(self, **kwargs):
         self.model = kwargs['model']
-        self.config = kwargs['config']
+        self.rest_config = kwargs['rest_config']
         self.reqparse = reqparse.RequestParser()
         
-        for arg in self.config['reqparse']:
+        for arg in self.rest_config:
             if arg.has_key('type'):
                 self.reqparse.add_argument(arg['field'], type=eval(arg['type']), location=arg['location'])
             else:
@@ -73,7 +73,7 @@ def not_found(error):
     
 
 if __name__ == '__main__':
-    config = json.load(open('/src/config.json'))
+    
     logger.info('Starting service.')
     start_args = parse_arguments()
     port = start_args.port
@@ -82,9 +82,10 @@ if __name__ == '__main__':
     model = apiModel(start_args.model_file)
     logger.info('Done loading model.')
     
+    rest_config = json.load(open('/src/rest_config.json'))
     api.add_resource(ClassifierAPI, '/api/score', resource_class_kwargs={
         'model' : model,
-        'config' : config
+        'rest_config' : rest_config
     })
     
     api.add_resource(HealthCheck, '/api/health')

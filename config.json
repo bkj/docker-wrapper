@@ -1,6 +1,13 @@
 {
-    "description" : "Description of analytic",
-    "reqparse" : [
+    "image_name" : "hog",
+    "description" : "dlib HOG detectors",
+    
+    "class" : "../hog_model.py",
+    "model" : "../models/flag-detector-C9-8de272.svm",
+    "bootstrap" : "../bootstrap.sh",
+    "additional" : ["../requirements.txt", "../test_api.sh", "../data", "../README.md"],
+    
+    "rest_args" : [
         {
             "field" : "url",
             "location" : "json",
