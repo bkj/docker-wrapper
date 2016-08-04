@@ -1,5 +1,3 @@
-''' See README.md for information '''
-
 from __future__ import division
 import sys
 import json
@@ -37,14 +35,14 @@ def parse_arguments():
 class ClassifierAPI(Resource):
     def __init__(self, **kwargs):
         self.model = kwargs['model']
-        self.rest_config = kwargs['rest_config']
+        self.config = kwargs['config']
         self.reqparse = reqparse.RequestParser()
         
-        for arg in self.rest_config:
-            if arg.has_key('type'):
-                self.reqparse.add_argument(arg['field'], type=eval(arg['type']), location=arg['location'])
+        for rest_arg in self.config['rest_args']:
+            if rest_arg.has_key('type'):
+                self.reqparse.add_argument(rest_arg['field'], type=eval(rest_arg['type']), location=rest_arg['location'])
             else:
-                self.reqparse.add_argument(arg['field'], location=arg['location'])
+                self.reqparse.add_argument(rest_arg['field'], location=rest_arg['location'])
 
         super(ClassifierAPI, self).__init__()
 
@@ -73,6 +71,8 @@ def not_found(error):
     
 
 if __name__ == '__main__':
+    logger.info('Loading config.')
+    config = json.load(open('/src/config.json'))
     
     logger.info('Starting service.')
     start_args = parse_arguments()
@@ -80,12 +80,11 @@ if __name__ == '__main__':
     
     logger.info('Loading model.')
     model = apiModel(start_args.model_file)
-    logger.info('Done loading model.')
-    
-    rest_config = json.load(open('/src/rest_config.json'))
+
+    logger.info('Starting service.')    
     api.add_resource(ClassifierAPI, '/api/score', resource_class_kwargs={
         'model' : model,
-        'rest_config' : rest_config
+        'config' : config
     })
     
     api.add_resource(HealthCheck, '/api/health')
