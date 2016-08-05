@@ -10,7 +10,7 @@ if [ $# -eq 0 ]
 fi
 
 config=$1
-imname=$(cat config.json | jq -r .image_name)
+imname=$(cat $config | jq -r .image_name)
 
 # --
 # Create target directory
