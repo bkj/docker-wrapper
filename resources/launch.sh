@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd /src && python ./generic-app.py -mf ./model
+cd /src && python ./generic-app.py -m ./model
