@@ -1,0 +1,5 @@
+futures
+gunicorn
+unidecode
+Flask
+Flask-RESTful

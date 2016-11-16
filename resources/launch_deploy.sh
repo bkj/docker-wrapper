@@ -1,0 +1,3 @@
+#!/bin/bash
+echo Starting analytic...
+python /src/generic-app.py -m $MESOS_SANDBOX/$MODEL_PATH $SERVER_FLAGS
