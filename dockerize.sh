@@ -24,7 +24,6 @@ fi
 
 mkdir images/$imname
 
-
 # --
 # Copy files
 
@@ -35,5 +34,12 @@ cp `cat $config | jq -r .bootstrap` images/$imname/bootstrap.sh
 cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r {} images/$imname/
 cat $config | jq '{"model_name": .model_name, "description": .description, "rest_args": .rest_args}' > images/$imname/config.json
 cp $config images/$imname/.docker-wrapper-config.json
+
+base_image=$(cat ../config.json | jq -r ".base_image //empty")
+if [[ $base_image ]]
+then
+    sed  -i 's@FROM .*@FROM '"$base_image"'@' images/$imname/Dockerfile
+    sed  -i 's@FROM .*@FROM '"$base_image"'@' images/$imname/Dockerfile.deploy
+fi
 
 tar -zcf images/$imname.tar.gz images/$imname
