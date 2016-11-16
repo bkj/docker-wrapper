@@ -48,5 +48,10 @@ then
     sed  -i 's/docker run/NV_GPU=1 sudo nvidia-docker run/' images/$imname/quickstart.sh
 fi
 
+legacy_flag=$(cat ../config.json | jq -r ".legacy_flag //empty")
+if [[ $gpu_flag ]]
+then
+    mv images/$imname/legacy-app.py images/$imname/generic-app.py
+fi
 
 tar -zcf images/$imname.tar.gz images/$imname
