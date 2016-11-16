@@ -42,4 +42,11 @@ then
     sed  -i 's@FROM .*@FROM '"$base_image"'@' images/$imname/Dockerfile.deploy
 fi
 
+gpu_flag=$(cat ../config.json | jq -r ".gpu_flag //empty")
+if [[ $gpu_flag ]]
+then
+    sed  -i 's/docker run/NV_GPU=1 sudo nvidia-docker run/' images/$imname/quickstart.sh
+fi
+
+
 tar -zcf images/$imname.tar.gz images/$imname
