@@ -28,6 +28,7 @@ mkdir images/$imname
 # Copy files
 
 cp resources/* images/$imname/
+cp resources/.dockerignore images/$imname/
 cp `cat $config | jq -r .class` images/$imname/model_class.py
 cp -r `cat $config | jq -r .model` images/$imname/model
 cp `cat $config | jq -r .bootstrap` images/$imname/bootstrap.sh
