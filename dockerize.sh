@@ -35,20 +35,20 @@ cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r {} images/$imname/
 cat $config | jq '{"model_name": .model_name, "description": .description, "rest_args": .rest_args}' > images/$imname/config.json
 cp $config images/$imname/.docker-wrapper-config.json
 
-base_image=$(cat ../config.json | jq -r ".base_image //empty")
+base_image=$(cat $config | jq -r ".base_image //empty")
 if [[ $base_image ]]
 then
     sed  -i 's@FROM .*@FROM '"$base_image"'@' images/$imname/Dockerfile
     sed  -i 's@FROM .*@FROM '"$base_image"'@' images/$imname/Dockerfile.deploy
 fi
 
-gpu_flag=$(cat ../config.json | jq -r ".gpu_flag //empty")
+gpu_flag=$(cat $config | jq -r ".gpu_flag //empty")
 if [[ $gpu_flag ]]
 then
     sed  -i 's/docker run/NV_GPU=1 sudo nvidia-docker run/' images/$imname/quickstart.sh
 fi
 
-legacy_flag=$(cat ../config.json | jq -r ".legacy_flag //empty")
+legacy_flag=$(cat $config | jq -r ".legacy_flag //empty")
 if [[ $gpu_flag ]]
 then
     mv images/$imname/legacy-app.py images/$imname/generic-app.py
