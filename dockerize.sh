@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DW_VERSION=1
+
 # --
 # Parse input
 
@@ -11,6 +13,14 @@ fi
 
 config=$1
 imname=$(cat $config | jq -r .image_name)
+config_version=$(cat $config | jq -r ".dw_version //empty")
+
+if [ -n "$config_version" ]; then
+    if [ $config_version != $DW_VERSION ]; then
+        echo "Versions don't match: $config_version vs $DW_VERSION"
+        exit 1
+    fi;
+fi;
 
 # --
 # Create target directory
