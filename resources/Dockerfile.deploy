@@ -6,11 +6,11 @@ EXPOSE 5000
 
 ADD ./dw-bootstrap /dw-bootstrap
 RUN chmod -x /dw-bootstrap/bootstrap.sh
-RUN cd /src; sh /dw-bootstrap/bootstrap.sh
+RUN cd /dw-bootstrap; sh bootstrap.sh
 
 ADD ./app-bootstrap /app-bootstrap
 RUN chmod -x /app-bootstrap/bootstrap.sh
-RUN cd /src; sh /app-bootstrap/bootstrap.sh
+RUN cd /app-bootstrap; sh bootstrap.sh
 
 ADD . /src
 RUN chmod -x /src/launch_deploy.sh
