@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DW_VERSION=1
+DW_VERSION=2
 
 # --
 # Parse input
