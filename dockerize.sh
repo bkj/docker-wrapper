@@ -31,7 +31,7 @@ cp resources/* images/$imname/
 cp resources/.dockerignore images/$imname/
 cp `cat $config | jq -r .class` images/$imname/model_class.py
 cp -r `cat $config | jq -r .model` images/$imname/model
-cp `cat $config | jq -r .bootstrap` images/$imname/bootstrap.sh
+cp -r `cat $config | jq -r .bootstrap` images/$imname/app-bootstrap
 cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r {} images/$imname/
 cat $config | jq '{"model_name": .model_name, "description": .description, "rest_args": .rest_args}' > images/$imname/config.json
 cp $config images/$imname/.docker-wrapper-config.json

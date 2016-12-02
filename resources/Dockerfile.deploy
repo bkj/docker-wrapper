@@ -2,15 +2,16 @@ FROM continuumio/anaconda
 
 MAINTAINER QCR
 
-ADD . /src
-
 EXPOSE 5000
 
-RUN chmod -x /src/docker-wrapper-bootstrap.sh
-RUN cd /src; sh /src/docker-wrapper-bootstrap.sh
+ADD ./dw-bootstrap /dw-bootstrap
+RUN chmod -x /dw-bootstrap/bootstrap.sh
+RUN cd /src; sh /dw-bootstrap/bootstrap.sh
 
-RUN chmod -x /src/bootstrap.sh
-RUN cd /src; sh /src/bootstrap.sh
+ADD ./app-bootstrap /app-bootstrap
+RUN chmod -x /app-bootstrap/bootstrap.sh
+RUN cd /src; sh /app-bootstrap/bootstrap.sh
 
+ADD . /src
 RUN chmod -x /src/launch_deploy.sh
 CMD sh /src/launch_deploy.sh
