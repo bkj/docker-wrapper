@@ -5,7 +5,7 @@
     "class" : "../hog_model.py",
     "model" : "../models/flag-detector-C9-8de272.svm",
     "model_name" : "flag-detector-C9-8de272.svm",
-    "bootstrap" : "../bootstrap.sh",
+    "bootstrap" : "../bootstrap",
     "additional" : ["../requirements.txt", "../test_api.sh", "../data", "../README.md"],
     
     "rest_args" : [
