@@ -16,8 +16,13 @@ imname=$(cat $config | jq -r .image_name)
 config_version=$(cat $config | jq -r ".dw_version //empty")
 
 if [ -n "$config_version" ]; then
+<<<<<<< HEAD
     if [ $config_version != $DW_VERSION ]; then
         echo "Versions don't match: $config_version vs $DW_VERSION"
+=======
+    if [ $config_version != $DW_VERSION ]; then 
+        echo "Versions don't match: $config_version vs $DW_VERSION"  
+>>>>>>> master
         exit 1
     fi;
 fi;
