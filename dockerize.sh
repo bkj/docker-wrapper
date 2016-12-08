@@ -42,8 +42,16 @@ cp resources/.dockerignore images/$imname/
 
 cp ../`cat $config | jq -r .class` images/$imname/model_class.py
 cp -r ../`cat $config | jq -r .model` images/$imname/model
-cp -r ../`cat $config | jq -r .bootstrap` images/$imname/app-bootstrap
-cat $config | jq -r '.additional | .[]' | xargs -I {} cp -r ../{} images/$imname/
+
+if [[ $(jq -r ".bootstrap //empty" $config) ]]
+then
+    cp -r ../`jq -r .bootstrap $config` images/$imname/app-bootstrap    
+else
+    mkdir -p images/$imname/app-bootstrap 
+    echo "#!/bin/bash" > images/$imname/app-bootstrap/bootstrap.sh
+fi
+
+jq -r '.additional | .[]' $config | xargs -I {} cp -r ../{} images/$imname/
 
 cat $config | jq '{"model_name": .model_name, "description": .description, "rest_args": .rest_args}' > images/$imname/config.json
 cp $config images/$imname/.docker-wrapper-config.json
