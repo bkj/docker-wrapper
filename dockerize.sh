@@ -76,7 +76,7 @@ fi
 # --
 # Use non-`gunicorn` server?
 legacy_flag=$(cat $config | jq -r ".legacy_flag //empty")
-if [[ $gpu_flag ]]
+if [[ $legacy_flag ]]
 then
     mv images/$imname/legacy-app.py images/$imname/generic-app.py
 fi
