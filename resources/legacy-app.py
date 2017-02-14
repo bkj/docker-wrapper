@@ -48,11 +48,7 @@ class ClassifierAPI(Resource):
 
     def post(self):
         args = self.reqparse.parse_args()
-        try:
-            return model.predict_api(**args)
-        except Exception as e:
-            logger.info(e)
-            return {}
+        return model.predict_api(**args)
 
 
 class HealthCheck(Resource):
