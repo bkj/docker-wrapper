@@ -70,7 +70,7 @@ fi
 gpu_flag=$(cat $config | jq -r ".gpu_flag //empty")
 if [[ $gpu_flag ]]
 then
-    sed  -i 's/docker run/NV_GPU=1 sudo nvidia-docker run/' images/$imname/quickstart.sh
+    sed  -i 's/docker run/NV_GPU=1 nvidia-docker run/' images/$imname/quickstart.sh
 fi
 
 # --
