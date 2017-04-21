@@ -68,10 +68,8 @@ class ModelAPI(Resource):
         
     def post(self):
         args = self.reqparse.parse_args()
-        print args
         response_queue = self.external.rand_write(args)
-        res = self.external.read(queue=response_queue)
-        req, pred, err = res
+        req, pred, err = self.external.read(queue=response_queue)
         if err:
             abort(err)
         else:
@@ -107,6 +105,10 @@ if __name__ == '__main__':
         'threads': args.threads,
         'workers': args.workers
     }
+    
+    # Prep
+    external = RedisExternal()
+    external.clear()
     
     logger.info('adding /api/score')
     api.add_resource(ModelAPI, '/api/score', resource_class_kwargs={

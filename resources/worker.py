@@ -36,16 +36,15 @@ def do_io(external, model, io_queue, args):
             try:
                 obj, err = model.load(req)
                 io_queue.put((response_queue, req, obj, err))
-            except KeyboardInterrupt:
-                raise
             except:
                 print >> sys.stderr, "worker.do_work: uncaught error:" % req
                 io_queue.put((response_queue, req, None, 501))
         except KeyboardInterrupt:
             raise
-        
         except Empty:
             return
+        except:
+            raise
 
 def do_work(external, model, io_queue, args):
     print >> sys.stderr, 'worker.do_work: started'
