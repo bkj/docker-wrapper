@@ -3,3 +3,5 @@ gunicorn
 unidecode
 Flask
 Flask-RESTful
+redis
+ujson

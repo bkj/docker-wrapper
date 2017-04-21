@@ -1,3 +1,5 @@
 #!/bin/bash
 
-cd /src && python ./generic-app.py -m /scratch/model
+redis-server &
+cd /src && ./worker.py --model /scratch/model --io-threads 2 & 
+cd /src && ./generic-app.py -w 2 -t 2
