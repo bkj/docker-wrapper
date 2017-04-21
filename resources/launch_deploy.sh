@@ -1,3 +1,6 @@
 #!/bin/bash
-echo Starting analytic...
-python /src/generic-app.py -m $MESOS_SANDBOX/$MODEL_PATH $SERVER_FLAGS
+
+
+redis-server &
+cd /src && ./worker.py --model -m $MESOS_SANDBOX/$MODEL_PATH --io-threads 3 & 
+cd /src && ./generic-app.py $SERVER_FLAGS
