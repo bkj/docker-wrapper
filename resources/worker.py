@@ -4,6 +4,7 @@
     worker.py
 """
 
+import os
 import sys
 import redis
 import argparse
@@ -23,6 +24,7 @@ def parse_args():
     parser.add_argument('-m', '--model', help='Specify model file.', type=str, required=True)
     parser.add_argument('--io-threads', type=int, default=1)
     parser.add_argument('--timeout', type=int, default=60000)
+    parser.add_argument('--config', type=str, default='/src/config.json')
     return parser.parse_args()
 
 # --
@@ -69,7 +71,7 @@ def do_work(external, model, io_queue, args):
 
 if __name__ == "__main__":
     args = parse_args()
-    config = json.load(open('/src/config.json'))
+    config = json.load(open(args.config))
     
     external = RedisExternal()
     model = Worker(args.model, config['model_name'])

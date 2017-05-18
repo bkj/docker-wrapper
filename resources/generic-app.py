@@ -43,6 +43,7 @@ def parse_arguments():
     parser.add_argument('-w', '--workers', help="Gunicorn workers", type=int, default=1)
     parser.add_argument('-s', '--statsd-host', help="Statsd host", type=str)
     parser.add_argument('-p', '--prefix-statsd', help="Statsd prefix", type=str)
+    parser.add_argument('-c', '--config', help="Config path", type=str, default='/src/config.json')
     return parser.parse_args()
 
 # --
@@ -92,8 +93,8 @@ def not_found(error):
 
 if __name__ == '__main__':
     logger.info('Loading config.')
-    config = json.load(open('/src/config.json'))
     args = parse_arguments()
+    config = json.load(open(args.config))
     
     hostport = args.listen_host.split(':')
     port = int(hostport[1]) if len(hostport) == 2 else 5000
