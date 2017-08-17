@@ -47,7 +47,7 @@ cp $config images/$imname/.docker-wrapper-config.json
 # --
 # Symlink model
 
-jq -r .model_path $config > images/$imname/model_path
+jq -r .model_path $config | xargs -I {} readlink -f ../{} > images/$imname/model_path
 
 # --
 # Bootstrap image
